@@ -22,10 +22,11 @@ struct Generator{
 		int value;
 		bool is_ready = false;
 
-		// 传值的同时要挂起, 值存入 value 当中
-		std::suspend_always await_transform(int val)
+		// await_transform 替换为 yield_value
+		std::suspend_always yield_value(int val)
 		{
 			this->value = val;
+			is_ready = true;
 			return {};
 		}
 	};
@@ -94,7 +95,7 @@ Generator sequence()
 	int i = 0;
 	while (i < 5)
 	{
-		co_await i++;
+		co_yield i++;
 	}
 }
 
