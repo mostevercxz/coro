@@ -99,10 +99,25 @@ Generator sequence()
 	}
 }
 
+Generator fibonacci()
+{
+	co_yield 0;
+	co_yield 1;
+
+	int a = 0;
+	int b = 1;
+	while (true)
+	{
+		co_yield a+b;
+		b = a + b;
+		a = b - a;
+	}
+}
+
 int main()
 {
-	auto gen = sequence();
-	for (int i =0; i < 8; ++i)
+	auto gen = fibonacci();
+	for (int i =0; i < 10; ++i)
 	{
 		//std::cout << gen.next() << std::endl;
 		if (gen.has_next())
